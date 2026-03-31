@@ -3,11 +3,10 @@ services:
   payload:
     image: node:20-alpine
     ports:
-      - '3003:3000'
+      - '3000:3000'
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
-      - ${UPLOADS_HOST_DIR:-/srv/autoads/uploads}:/srv/autoads/uploads
     working_dir: /home/node/app/
     command: sh -c "yarn install && yarn dev"
     env_file:

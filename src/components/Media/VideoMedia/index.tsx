@@ -11,6 +11,7 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   const { onClick, resource, videoClassName } = props
 
   const videoRef = useRef<HTMLVideoElement>(null)
+  const mediaBase = process.env.NEXT_PUBLIC_MEDIA_URL || '/uploads'
   // const [showFallback] = useState<boolean>()
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
         playsInline
         ref={videoRef}
       >
-        <source src={getMediaUrl(resourceUrl && resourceUrl !== '' ? resourceUrl : `/media/${filename}`)} />
+        <source src={getMediaUrl(resourceUrl && resourceUrl !== '' ? resourceUrl : `${mediaBase}/${filename}`)} />
       </video>
     )
   }

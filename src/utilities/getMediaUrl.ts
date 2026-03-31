@@ -9,6 +9,9 @@ import { getClientSideURL } from '@/utilities/getURL'
 export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | null): string => {
   if (!url) return ''
 
+  const mediaBaseRaw = process.env.NEXT_PUBLIC_MEDIA_URL
+  const mediaBase = mediaBaseRaw && mediaBaseRaw.startsWith('/') ? mediaBaseRaw : mediaBaseRaw ? `/${mediaBaseRaw}` : undefined
+
   if (cacheTag && cacheTag !== '') {
     cacheTag = encodeURIComponent(cacheTag)
   }
@@ -16,6 +19,12 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
   // Check if URL already has http/https protocol
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return cacheTag ? `${url}?${cacheTag}` : url
+  }
+
+  if (mediaBase) {
+    if (url === '/media' || url.startsWith('/media/')) {
+      url = `${mediaBase}${url.slice('/media'.length)}`
+    }
   }
 
   // Otherwise prepend client-side URL

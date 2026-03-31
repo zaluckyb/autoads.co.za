@@ -39,8 +39,8 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // Upload to the public/media directory - works for both local and production
     staticDir: process.env.MEDIA_DIR || path.resolve(process.cwd(), 'public/media'),
+    staticURL: process.env.MEDIA_URL || '/uploads',
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     mimeTypes: ['image/*', 'video/*', 'application/pdf'],

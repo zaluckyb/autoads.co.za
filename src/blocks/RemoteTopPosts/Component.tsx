@@ -72,6 +72,8 @@ export const RemoteTopPostsBlock: React.FC<RemoteTopPostsBlockProps & { classNam
     console.error(e)
   }
 
+  const mediaBase = process.env.NEXT_PUBLIC_MEDIA_URL || process.env.MEDIA_URL || '/uploads'
+
   const origin = (() => {
     try { return new URL(endpoint).origin } catch { return '' }
   })()
@@ -95,7 +97,7 @@ export const RemoteTopPostsBlock: React.FC<RemoteTopPostsBlockProps & { classNam
       // relative path
       if (url.startsWith('/')) return new URL(url, origin).href
       // bare filename or relative without leading slash
-      const candidate = url.includes('/media/') ? url : `/media/${url}`
+      const candidate = url.includes('/media/') || url.includes('/uploads/') ? url : `${mediaBase}/${url}`
       return new URL(candidate, origin).href
     } catch {
       return `${origin}${url.startsWith('/') ? '' : '/'}${url}`

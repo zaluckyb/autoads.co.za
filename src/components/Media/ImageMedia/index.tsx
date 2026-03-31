@@ -37,6 +37,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let height: number | undefined
   let alt = altFromProps
   let src: StaticImageData | string = srcFromProps || ''
+  const mediaBase = process.env.NEXT_PUBLIC_MEDIA_URL || '/uploads'
 
   if (!src && resource && typeof resource === 'object') {
     const {
@@ -54,7 +55,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     const cacheTag = resource.updatedAt
 
     // Prefer static /media path, but fall back to resource.url (e.g. /api/media/file/..)
-    const candidateUrl = resourceUrl && resourceUrl !== '' ? resourceUrl : `/media/${filename}`
+    const candidateUrl = resourceUrl && resourceUrl !== '' ? resourceUrl : `${mediaBase}/${filename}`
     src = getMediaUrl(candidateUrl, cacheTag)
   }
 
