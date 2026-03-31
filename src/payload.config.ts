@@ -109,19 +109,22 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  email: nodemailerAdapter({
-    transportOptions: {
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    },
-    defaultFromName: 'AutoAds',
-    defaultFromAddress: process.env.SMTP_FROM || '',
-  }),
+  email: process.env.SMTP_HOST
+    ? nodemailerAdapter({
+        defaultFromName: 'AutoAds',
+        defaultFromAddress: process.env.SMTP_FROM || '',
+        skipVerify: process.env.SKIP_SMTP_VERIFY === 'true',
+        transportOptions: {
+          host: process.env.SMTP_HOST,
+          port: Number(process.env.SMTP_PORT),
+          secure: process.env.SMTP_SECURE === 'true',
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+          },
+        },
+      })
+    : undefined,
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {
