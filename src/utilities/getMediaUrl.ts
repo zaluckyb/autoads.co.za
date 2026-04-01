@@ -27,7 +27,7 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     }
   }
 
-  // Otherwise prepend client-side URL
-  const baseUrl = getClientSideURL()
-  return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+  // Return relative URL to prevent hydration mismatches
+  // between explicit server env domains and client window origins
+  return cacheTag ? `${url}?${cacheTag}` : url
 }

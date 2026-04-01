@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useId } from 'react'
 
 export type HtmlBlockProps = {
   html: string
@@ -34,11 +34,8 @@ export const HtmlBlock: React.FC<HtmlBlockProps> = ({ html, className }) => {
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   // Unique instance ID to avoid collisions across multiple HtmlBlock instances
-  const instanceId = useMemo(() => {
-    const rand = Math.random().toString(36).slice(2)
-    const ts = Date.now().toString(36)
-    return `hb_${ts}_${rand}`
-  }, [])
+  const rawId = useId()
+  const instanceId = `hb_${rawId.replace(/[^a-zA-Z0-9]/g, '')}`
 
   // Rewrite Travelstart links to a local proxy path
   useEffect(() => {

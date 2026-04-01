@@ -1,0 +1,5 @@
+services:
+  payload:
+    command: sh -c "yarn install && yarn build && yarn start"
+    environment:
+      - NODE_ENV=production

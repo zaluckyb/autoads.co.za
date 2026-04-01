@@ -1,4 +1,9 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 import redirects from './redirects.js'
 
@@ -8,13 +13,11 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
+    qualities: [25, 50, 75, 90, 100],
     // Disable built-in optimizer to avoid /_next/image requests in production
     unoptimized: true,
     // Allow images from the live domain explicitly
@@ -73,8 +76,15 @@ const nextConfig = {
   compiler: {
     emotion: false,
   },
+  reactCompiler: false,
+  sassOptions: {
+    includePaths: [
+      path.join(__dirname, 'node_modules/@payloadcms/ui/dist/scss'),
+      path.join(__dirname, 'node_modules/@payloadcms/ui/scss'),
+      path.join(__dirname, 'src/scss')
+    ],
+  },
   experimental: {
-    reactCompiler: false,
     optimizePackageImports: ['@payloadcms/richtext-lexical'],
   },
   transpilePackages: ['@payloadcms/richtext-lexical', '@payloadcms/ui'],
