@@ -105,6 +105,9 @@ export default buildConfig({
     ...plugins,
     // storage-adapter-placeholder
   ],
+  rateLimit: {
+    trustProxy: true,
+  },
   secret: process.env.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

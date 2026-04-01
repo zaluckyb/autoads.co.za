@@ -39,8 +39,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    staticDir: process.env.MEDIA_DIR || path.resolve(process.cwd(), 'public/media'),
-    staticURL: process.env.MEDIA_URL || '/uploads',
+    staticDir: process.env.MEDIA_DIR ? path.resolve(process.cwd(), process.env.MEDIA_DIR) : path.resolve(process.cwd(), 'public/media'),
     mimeTypes: ['image/*', 'video/*', 'application/pdf'],
   },
 }
